@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Pinturas - Martha Miguel Flores</title>
+    <!-- Tailwind CSS desde CDN para estilos globales básicos y utilidades -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconografía moderna -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Variables globales para colores y transiciones */
+        :root {
+            --bg-dark: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --accent-gold: #f59e0b;
+            --accent-hover: #d97706;
+            --text-main: #f8fafc;
+            --max-gallery-width: 1920px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* 
+           ESCALADO RESPONSIVO PARA PANTALLAS GRANDES Y 4K
+           Uso de clamp() para tipografía dinámica que escala según la resolución 
+        */
+        h1.gallery-title {
+            font-size: clamp(1.75rem, 3vw, 3.5rem);
+        }
+
+        p.gallery-subtitle {
+            font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+        }
+
+        /* Contenedor principal con limitador max-width para ultra-wide */
+        .app-viewport {
+            width: 100%;
+            max-width: var(--max-gallery-width);
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Área de exhibición de la obra con escalado en V H (Viewport Height) */
+        .artwork-container {
+            position: relative;
+            width: 100%;
+            height: clamp(400px, 65vh, 1080px); /* Altura adaptativa de HD a 4K */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Asegura que la imagen mantenga su aspect ratio sin distorsionarse */
+        .artwork-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-out;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+        }
+
+        /* Estilos de botones de navegación */
+        .nav-btn {
+            background: rgba(15, 23, 42, 0.65);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-gold);
+            color: #0f172a;
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Barra de miniatura con scroll suave y dimensiones adaptativas */
+        .thumbnails-track {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0.5rem;
+            scroll-behavior: smooth;
+        }
+
+        .thumbnails-track::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .thumbnails-track::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.3);
+            border-radius: 4px;
+        }
+
+        .thumb-card {
+            flex: 0 0 auto;
+            width: clamp(80px, 8vw, 160px);
+            height: clamp(80px, 8vw, 160px);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .thumb-card.active, .thumb-card:hover {
+            opacity: 1;
+            border-color: var(--accent-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .thumb-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Media Query específica para monitores UHD/4K (Superiores a 2000px) */
+        @media (min-width: 2000px) {
+            :root {
+                --max-gallery-width: 2400px;
+            }
+
+            .app-viewport {
+                padding: 2.5rem;
+            }
+
+            .artwork-info-panel {
+                padding: 2rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="app-viewport">
+        <!-- Encabezado Principal -->
+        <header class="text-center my-4 md:my-6">
+            <h1 class="gallery-title font-serif font-bold text-amber-400 tracking-wide">
+                Galería de Obras
+            </h1>
+            <p class="gallery-subtitle text-slate-400 mt-1 max-w-2xl mx-auto">
+                Colección artística adaptable y en resolución.
+            </p>
+        </header>
+
+        <!-- Visor de Arte Principal -->
+        <main class="flex-grow flex flex-col justify-center my-2 md:my-4">
+            <div class="artwork-container group">
+                
+                <!-- Botón Anterior -->
+                <button id="prevBtn" aria-label="Obra anterior" class="nav-btn absolute left-4 z-10 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-xl md:text-2xl">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <!-- Imagen Exhibida -->
+                <img id="mainArtwork" src="" alt="Cargando obra..." class="artwork-image">
+
+                <!-- Botón Siguiente -->
+                <button id="nextBtn" aria-label="Siguiente obra" class="nav-btn absolute right-4 z-10 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-xl md:text-2xl">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <!-- Panel de Detalles Superpuesto Inferior -->
+                <div class="artwork-info-panel absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent p-4 md:p-6 text-left transition-opacity duration-300">
+                    <div class="max-w-4xl">
+                        <span id="artworkYear" class="text-amber-400 text-xs md:text-sm font-semibold tracking-wider uppercase">2024</span>
+                        <h2 id="artworkTitle" class="text-lg md:text-2xl lg:text-3xl font-bold text-white mt-0.5">Título de la Pintura</h2>
+                        <p id="artworkDescription" class="text-slate-300 text-xs md:text-sm lg:text-base mt-1 line-clamp-2 md:line-clamp-3">
+                            Descripción de la técnica, estilo y concepto creativo detrás de la obra actual.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navegador de Miniaturas -->
+        <section class="mt-2 md:mt-4">
+            <div id="thumbnailsContainer" class="thumbnails-track">
+                <!-- Se genera dinámicamente mediante JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Arreglo de pinturas con datos de prueba
+        const artworks = [
+            {
+                id: 1,
+                title: "Atardecer Dorado",
+                year: "2024",
+                description: "Óleo sobre lienzo. Una exploración de la luz y el color cálido reflejado sobre aguas tranquilas.",
+                image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                id: 2,
+                title: "Geometría del Pensamiento",
+                year: "2023",
+                description: "Técnica mixta y acrílico. Estructuras abstractas que dialogan entre la simetría y el caos.",
+                image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+                id: 3,
+                title: "Bosque Encantado",
+                year: "2024",
+                description: "Acuarela sobre papel Canson. Tonos fríos y verdosos evocando la humedad y paz de la naturaleza profunda.",
+                image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1600&q=80"
+            },
+            {
+                id: 4,
+                title: "Retrato en Azul",
+                year: "2023",
+                description: "Estudio en tonos monocráticos explorando la melancolía y la expresividad de la mirada.",
+                image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1000&q=80"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        // Referencias del DOM
+        const mainArtwork = document.getElementById('mainArtwork');
+        const artworkTitle = document.getElementById('artworkTitle');
+        const artworkYear = document.getElementById('artworkYear');
+        const artworkDescription = document.getElementById('artworkDescription');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+
+        function renderGallery() {
+            // Renderizar miniaturas
+            thumbnailsContainer.innerHTML = '';
+            artworks.forEach((art, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `thumb-card ${index === currentIndex ? 'active' : ''}`;
+                thumb.innerHTML = `<img src="${art.image}" alt="${art.title}">`;
+                thumb.addEventListener('click', () => updateActiveArtwork(index));
+                thumbnailsContainer.appendChild(thumb);
+            });
+
+            // Cargar obra inicial
+            updateActiveArtwork(currentIndex);
+        }
+
+        function updateActiveArtwork(index) {
+            currentIndex = index;
+            const current = artworks[currentIndex];
+
+            // Transición suave
+            mainArtwork.style.opacity = '0';
+            mainArtwork.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                mainArtwork.src = current.image;
+                mainArtwork.alt = current.title;
+                artworkTitle.textContent = current.title;
+                artworkYear.textContent = current.year;
+                artworkDescription.textContent = current.description;
+
+                mainArtwork.style.opacity = '1';
+                mainArtwork.style.transform = 'scale(1)';
+            }, 200);
+
+            // Actualizar miniatura activa
+            const thumbs = thumbnailsContainer.children;
+            Array.from(thumbs).forEach((thumb, i) => {
+                if (i === currentIndex) {
+                    thumb.classList.add('active');
+                    thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+        }
+
+        // Navegación con botones
+        prevBtn.addEventListener('click', () => {
+            const newIndex = currentIndex === 0 ? artworks.length - 1 : currentIndex - 1;
+            updateActiveArtwork(newIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const newIndex = currentIndex === artworks.length - 1 ? 0 : currentIndex + 1;
+            updateActiveArtwork(newIndex);
+        });
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevBtn.click();
+            if (e.key === 'ArrowRight') nextBtn.click();
+        });
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', renderGallery);
+    </script>
+</body>
+</html>
