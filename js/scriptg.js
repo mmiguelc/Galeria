@@ -162,9 +162,24 @@ function updateActiveArtwork(index, useFade = true) {
     Array.from(thumbs).forEach((thumb, i) => {
         if (i === currentIndex) {
             thumb.classList.add('active');
-            thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+            // --- SOLUCIÓN AQUÍ ---
+            // Calculamos la posición exacta solo en el eje X de su contenedor contenedor
+            const containerWidth = thumbnailsContainer.clientWidth;
+            const thumbOffsetLeft = thumb.offsetLeft;
+            const thumbWidth = thumb.clientWidth;
+
+           // Centra la miniatura activa dentro del track sin alterar el scroll global de la pantalla
+            thumbnailsContainer.scrollTo({
+                left: thumbOffsetLeft - (containerWidth / 2) + (thumbWidth / 2),
+                behavior: 'smooth'
+            });
         } else {
-            thumb.classList.remove('active');
+            removeActiveThumb(thumb);
+
+        // thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // } else {
+        //     thumb.classList.remove('active');
         }
     });
 }
