@@ -242,4 +242,62 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Inicialización al cargar la página
-window.addEventListener('DOMContentLoaded', renderGallery);
+window.addEventListener('DOMContentLoaded', () => {
+    renderGallery();
+    fetchDatoCMSData();
+});
+
+// Mostrar datos de DatoCMS al cargar la página
+const datoCMSResult = document.getElementById('datoCMSResult');
+
+async function fetchDatoCMSData() {
+    const token = 'b0fd0709caba56da10986849d00c91';
+    const query = `
+        query Page {
+            page {
+                title
+                artwork {
+                    titulo
+                    technique
+                    image {
+                        url
+                        alt
+                    }
+                }
+            }
+        }
+    `;
+
+    try {
+        const response = await fetch('https://graphql.datocms.com/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ query })
+        });
+
+        const json = await response.json();
+        const data = json.data;
+
+        if (data && data.page && data.page.artwork) {
+            const list = document.createElement('ul');
+            data.page.artwork.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${item.titulo}</strong> — ${item.technique}<br>
+                    <img src="${item.image.url}" alt="${item.image.alt}" style="max-width:150px; margin-top:5px;">
+                `;
+                list.appendChild(li);
+            });
+            datoCMSResult.innerHTML = `<h3 class="text-xl font-bold mb-2">${data.page.title}</h3>`;
+            datoCMSResult.appendChild(list);
+        } else {
+            datoCMSResult.textContent = 'No se encontraron datos.';
+        }
+    } catch (error) {
+        datoCMSResult.textContent = 'Error al obtener datos de DatoCMS.';
+        console.error(error);
+    }
+}

@@ -21,7 +21,9 @@
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Germania One", system-ui;
+    font-weight: 400;
+    font-style: normal;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -33,7 +35,9 @@ body {
 }
 
 .font-serif-title {
-    font-family: 'Cinzel', serif;
+    font-family: "Germania One", system-ui;
+    font-weight: 400;
+    font-style: normal;
 }
 
 /* ==========================================================================
