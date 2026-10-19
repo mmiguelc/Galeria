@@ -1,49 +1,95 @@
 
 // Catálogo enriquecido de obras con Ficha Técnica Formal y soporte de estados
 const artworks = [
+
+
     {
-        id: 1,
-        title: "AJehová es mi Pastor",
+        id: 8,
+        title: "Jehová es mi Pastor",
         technique: "Óleo sobre lienzo",
-        dimensions: "100 x 80 cm",
+        dimensions: "70 x 60 cm",
         year: "2026",
         status: "Vendido",
         statusClass: "status-sold",
-        description: "Óleo sobre lienzo. Una exploración de la luz y el color cálido para una escena de campo.",
-        image: "https://www.datocms-assets.com/234127/1792260676-jesus-pastor-wide.webp"
+        description: "La fe de la infancia rescatada por el arte. Lo que comenzó como un trazo sagrado devino en reencuentro con un recuerdo familiar. Una pintura donde Jesús, el Pastor, recobra la vida a través de una composición tejida con nostalgia y luz.",
+        image: "https://www.datocms-assets.com/234127/1792372093-pastor.webp"
     },
     {
-        id: 2,
-        title: "Geometría del Pensamiento",
-        technique: "Técnica mixta y acrílico",
-        dimensions: "120 x 90 cm",
-        year: "2023",
-        status: "Colección Privada",
-        statusClass: "status-private",
-        description: "Estructuras abstractas superpuestas que representan la dualidad entre el orden geométrico del razonamiento y el flujo orgánico de las emociones.",
-        image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=2000&q=85"
-    },
-    {
-        id: 3,
-        title: "Bosque Encantado",
-        technique: "Acuarela sobre papel Canson",
-        dimensions: "70 x 50 cm",
-        year: "2024",
+        id: 7,
+        title: "Donde florecen las almas",
+        technique: "Técnica Mixta",
+        dimensions: "100 x 120 cm",
+        year: "2026",
         status: "En Exposición",
         statusClass: "status-exhibition",
-        description: "Capas sucesivas de veladuras en tonos fríos. Explora la bruma y la atmósfera serena de la naturaleza profunda mediante pigmentos botánicos.",
-        image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=2000&q=85"
+        description: "Nacida del misterio de la fe, esta pieza despoja a la muerte de sus sombras. Retrata al mensajero celeste como un tierno cosechador de almas, transformando el último adiós en un viaje de luz, paz y compañía sagrada.",
+        image: "https://www.datocms-assets.com/234127/1792364469-trascendente.webp"
+    },
+  {
+        id: 6,
+        title: "Donde la guerra sigue viviendo",
+        technique: "Óleo sobre lienzo",
+        dimensions: "60 x 85 cm",
+        year: "2026",
+        status: "Disponible",
+        statusClass: "status-available",
+        description: "La posguerra en su herida más íntima. Una viuda acorralada por el hambre y la enfermedad de su niño, obligada a entregar su propio templo como última ofrenda para ganarle un pulso a la muerte.",
+        image: "https://www.datocms-assets.com/234127/1792364469-sacrify.webp"
+    },
+  {
+        id: 5,
+        title: "Sangre de la tierra",
+        technique: "Técnica Mixta",
+        dimensions: "100 x 120 cm",
+        year: "2026",
+        status: "Disponible",
+        statusClass: "status-available",
+        description: "Esta obra refleja el pasado hisórico de un supuesto encuentro entre las culturas Moche y Nazca, rompiendo la línea temporal para plasmar así, un ritual místico donde ambas culturas coexisten.",
+        image: "https://www.datocms-assets.com/234127/1792371994-cultura.webp"
     },
     {
         id: 4,
-        title: "Retrato en Azul",
+        title: "La Dama Nocturna",
+        technique: "Aguado sobre lienzo",
+        dimensions: "85 x 60 cm",
+        year: "2025",
+        status: "En Exposición",
+        statusClass: "status-exhibition",
+        description: "Esta obra me ayudó a tener más soltura y desenvolvimiento de la mano, además de la presición para cada pincelada. Era una técnica nueva para mi sin embargo me gustó el acabado con el acrílico marrón.",
+        image: "https://www.datocms-assets.com/234127/1792364469-desnudo.webp"
+    },
+    {
+        id: 3,
+        title: "Rosas",
+        technique: "Óleo sobre lienzo",
+        dimensions: "50 x 70 cm",
+        year: "2024",
+        status: "Colección Privada",
+        statusClass: "status-private",
+        description: "Esta obra fue un verdadero reto para mi, iniciaba usando el óleo.  Requirió de mucha paciencia al pintar cada pétalo de las rosas, además de la perspectiva de transparencia en el jarrón de vidrio",
+        image: "https://www.datocms-assets.com/234127/1792364468-rosas.webp"
+    },
+    {
+        id: 2,
+        title: "Época",
         technique: "Óleo sobre madera",
-        dimensions: "60 x 60 cm",
-        year: "2023",
+        dimensions: "70 x 50 cm",
+        year: "2024",
         status: "Disponible",
         statusClass: "status-available",
-        description: "Exploración monocrática basada en la paleta del azul ultramar y cobalto, buscando trasmitir introspección y profundidad expresiva.",
-        image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=2000&q=85"
+        description: "Colores cálidos para respresentar una de mis estaciones favoritas del año, otoño.",
+        image: "https://www.datocms-assets.com/234127/1792371881-bodegon-2.webp"
+    },   
+    {
+        id: 1,
+        title: "Comienzo",
+        technique: "Óleo sobre madera",
+        dimensions: "50 x 40 cm",
+        year: "2024",
+        status: "Disponible",
+        statusClass: "status-available",
+        description: "Mi primera obra adentrándome al maravilloso mundo del arte plástico.",
+        image: "https://www.datocms-assets.com/234127/1792371751-bodegon.webp"
     }
 ];
 
