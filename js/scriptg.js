@@ -2,7 +2,6 @@
 // Catálogo enriquecido de obras con Ficha Técnica Formal y soporte de estados
 const artworks = [
 
-
     {
         id: 8,
         title: "Jehová es mi Pastor",
@@ -48,7 +47,29 @@ const artworks = [
         image: "https://www.datocms-assets.com/234127/1792371994-cultura.webp"
     },
     {
-        id: 4,
+        id: 7,
+        title: "María",
+        technique: "Óleo lienzo",
+        dimensions: "60 x 70 cm",
+        year: "2025",
+        status: "En Exposición",
+        statusClass: "status-exhibition",
+        description: "Un retrato donde el deber sofoca al deseo. En los ojos contenidos de la joven —al borde de un llanto que no llega a brotar— se adivina la entrega absoluta al peso inquebrantable de la tradición; el dolor mudo de un destino impuesto por la mano paterna y el abismo de una vida junto a un hombre a quien la edad y el afecto distan.",
+        image: "https://www.datocms-assets.com/234127/1792541745-nina.webp"
+    },
+    {
+        id: 6,
+        title: "Tu Mirada",
+        technique: "Óleo lienzo",
+        dimensions: "50 x 60 cm",
+        year: "2025",
+        status: "En Exposición",
+        statusClass: "status-exhibition",
+        description: "Un lienzo donde la calma se vuelve refugio. Entre el bullicio silencioso del mundo, la dama erige su mirada analítica con soberana serenidad; ataviada sin pompas ni artificios, revela en la simplicidad de su porte la más sublime distinción.",
+        image: "https://www.datocms-assets.com/234127/1792541745-la_dama.webp"
+    },
+    {
+        id: 5,
         title: "La Dama Nocturna",
         technique: "Aguado sobre lienzo",
         dimensions: "85 x 60 cm",
@@ -58,6 +79,17 @@ const artworks = [
         description: "Esta obra me ayudó a tener más soltura y desenvolvimiento de la mano, además de la presición para cada pincelada. Era una técnica nueva para mi sin embargo me gustó el acabado con el acrílico marrón.",
         image: "https://www.datocms-assets.com/234127/1792364469-desnudo.webp"
     },
+    {
+        id: 4,
+        title: "Color de la Sierra",
+        technique: "Óleo sobre lienzo",
+        dimensions: "60 x 70 cm",
+        year: "2024",
+        status: "Disponible",
+        statusClass: "status-available",
+        description: "Un canto visual a la abundancia de la sierra. Entre trazos de color vibrante y alegre que encienden el paisaje, una mujer emprende el camino a casa. Sobre sus espaldas, la alforja vestida de matices custodia el fruto de la tierra: el abrazo humilde y sagrado entre la cosecha, la fe en el hogar y el andar sereno.",
+        image: "https://www.datocms-assets.com/234127/1792541745-mi_sierra.webp"
+    },    
     {
         id: 3,
         title: "Rosas",
